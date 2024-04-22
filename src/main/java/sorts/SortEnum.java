@@ -9,7 +9,7 @@ public enum SortEnum {
     QUICK,
     HEAP,
     BUBBLE,
-    MERGE,
+    RECURSION_MERGE,
     INSERTION,
     SELECTION,
 }

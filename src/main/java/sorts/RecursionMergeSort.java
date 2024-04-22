@@ -4,7 +4,7 @@ package sorts;
  * @author zengxi.song
  * @date 2024/3/28
  */
-public class MergeSort implements Sort {
+public class RecursionMergeSort implements Sort {
     @Override
     public void sort(int[] nums) {
         mergeSort(nums, 0, nums.length - 1, new int[nums.length]);

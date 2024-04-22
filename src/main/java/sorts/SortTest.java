@@ -18,7 +18,7 @@ public class SortTest {
 
         test(nums, SortEnum.QUICK);
         test(nums, SortEnum.HEAP);
-        test(nums, SortEnum.MERGE);
+        test(nums, SortEnum.RECURSION_MERGE);
         test(nums, SortEnum.BUBBLE);
         test(nums, SortEnum.INSERTION);
         test(nums, SortEnum.SELECTION);
@@ -50,7 +50,7 @@ public class SortTest {
         map.put(SortEnum.QUICK, new QuickSort());
         map.put(SortEnum.HEAP, new HeapSort());
         map.put(SortEnum.BUBBLE, new BubbleSort());
-        map.put(SortEnum.MERGE, new MergeSort());
+        map.put(SortEnum.RECURSION_MERGE, new RecursionMergeSort());
         map.put(SortEnum.INSERTION, new InsertionSort());
         map.put(SortEnum.SELECTION, new SelectionSort());
         return map;

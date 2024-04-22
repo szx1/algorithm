@@ -7,6 +7,7 @@ package sorts;
 public class HeapSort implements Sort {
     @Override
     public void sort(int[] nums) {
+        // 构建大顶堆
         for (int i = nums.length / 2 - 1; i >= 0; i--) {
             adjustHeap(nums, nums.length, i);
         }
