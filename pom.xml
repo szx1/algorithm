@@ -19,6 +19,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.28</version>
         </dependency>
+
+        <!-- 引入 Guava 工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.0.1-jre</version>
+        </dependency>
     </dependencies>
 
 </project>

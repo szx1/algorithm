@@ -1,11 +1,15 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * 任务调度器
@@ -23,9 +27,40 @@ public class SixTwoOne {
         }
 
         List<Character> list = new ArrayList<>(countMap.keySet());
-        list.sort(Comparator.comparingInt(countMap::get));
+        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>((o1, o2) -> o2.num - o1.num);
+        for (Map.Entry<Character, Integer> entry : countMap.entrySet()) {
+            priorityQueue.add(new Pair(entry.getKey(), entry.getValue()));
+        }
+        int[] place = new int[26];
+        Arrays.fill(place, -1);
+        int time = 0;
+        int index = 0;
+        Set<Integer> validPlace = new HashSet<>();
+        while (!priorityQueue.isEmpty()) {
+            Pair poll = priorityQueue.poll();
+            if (place[poll.task - 'A'] == -1) {
+                place[poll.task - 'A'] = index;
+                poll.num--;
+            } else {
+
+            }
+
+            if (poll.num > 0) {
+                priorityQueue.add(poll);
+            }
+        }
         return 1;
 
+    }
+
+    class Pair {
+        Character task;
+        int num;
+
+        public Pair(Character task, int num) {
+            this.task = task;
+            this.num = num;
+        }
     }
 
     public int leastInterval1(char[] tasks, int n) {
