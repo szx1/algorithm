@@ -1,7 +1,7 @@
 package leetcode.math;
 
 /**
- * 两数之和
+ * 两整数之和
  *
  * @author zengxi.song
  * @date 2024/7/12

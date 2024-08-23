@@ -1,4 +1,4 @@
-package leetcode.dp.knapsack;
+package leetcode.dp.knapsack.complete;
 
 /**
  * 零钱兑换
