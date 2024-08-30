@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 
 /**
  * 合并K个升序链表
+ * 可参考21题
  *
  * @author zengxi.song
  * @date 2024/8/12
@@ -48,11 +49,7 @@ public class TwoThree {
     public ListNode mergeKLists2(ListNode[] lists) {
         // 采用分治的思想 递归两两合并
         // 时间复杂度O(kn*log k) 空间复杂度O(logk)
-        ListNode res = null;
-        for (ListNode list : lists) {
-            res = mergeTwoList(res, list);
-        }
-        return res;
+        return divide(lists, 0, lists.length - 1);
     }
 
     private ListNode divide(ListNode[] lists, int start, int end) {
