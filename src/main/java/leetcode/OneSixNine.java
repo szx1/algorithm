@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * 多数元素
+ * 主要是学习摩尔投票法 其他方法都很简单
  *
  * @author zengxi.song
  * @date 2024/4/17

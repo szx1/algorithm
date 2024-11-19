@@ -11,33 +11,54 @@ import leetcode.auxclass.ListNode;
 public class Two {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // 时间复杂度O(max(m,n)) 空间复杂度O(1)
+        // 递归 时间复杂度O(max(m,n)) 空间复杂度O(max(m,n)) 递归的栈空间
+        return addWithCarry(l1, l2, 0);
+    }
+
+    private ListNode addWithCarry(ListNode l1, ListNode l2, int carry) {
+        if (l1 == null && l2 == null) {
+            return carry > 0 ? new ListNode(carry) : null;
+        }
+        // 可能存在其中一个链表为null
+        // 如果出现null 这里始终让l2为null 简化代码编写
+        if (l1 == null) {
+            l1 = l2;
+            l2 = null;
+        }
+        int sum = l1.val + (l2 == null ? 0 : l2.val) + carry;
+        ListNode node = new ListNode(sum % 10);
+        node.next = addWithCarry(l1.next, l2 == null ? null : l2.next, sum / 10);
+        return node;
+    }
+
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        // 迭代 时间复杂度O(max(m,n)) 空间复杂度O(1)
         // 不用考虑大数问题
-        int remainder = 0;
+        int carry = 0;
         ListNode head = new ListNode();
         ListNode dump = head;
         while (l1 != null && l2 != null) {
-            int newV = l1.val + l2.val + remainder;
+            int newV = l1.val + l2.val + carry;
             head.next = new ListNode(newV % 10);
             head = head.next;
-            remainder = newV / 10;
+            carry = newV / 10;
             l1 = l1.next;
             l2 = l2.next;
         }
-        appendTail(l1 == null ? l2 : l1, head, remainder);
+        appendTail(l1 == null ? l2 : l1, head, carry);
         return dump.next;
     }
 
-    private void appendTail(ListNode l, ListNode head, int remainder) {
+    private void appendTail(ListNode l, ListNode head, int carry) {
         while (l != null) {
-            int newV = l.val + remainder;
+            int newV = l.val + carry;
             head.next = new ListNode(newV % 10);
             head = head.next;
-            remainder = newV / 10;
+            carry = newV / 10;
             l = l.next;
         }
-        if (remainder != 0) {
-            head.next = new ListNode(remainder);
+        if (carry != 0) {
+            head.next = new ListNode(carry);
         }
     }
 }

@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dp;
 
 /**
  * 乘积最大子数组
@@ -46,14 +46,15 @@ public class OneFiveTwo {
     }
 
     public int maxProduct1(int[] nums) {
-        int length = nums.length;
-        int[] max = new int[length];
-        int[] min = new int[length];
-        System.arraycopy(nums, 0, max, 0, length);
-        System.arraycopy(nums, 0, min, 0, length);
+        // 动态规划 时间复杂度度O(N) 空间复杂度O(1)
+        // 设max[i]为以i下标为结尾的子数组的最大值
+        // 设min[i]为以i下标为结尾的子数组的最小值
+        int[] max = new int[nums.length];
+        int[] min = new int[nums.length];
+        max[0] = nums[0];
+        min[0] = nums[0];
         int res = nums[0];
-        for (int i = 1; i < length; i++) {
-            // 将正负值分开处理
+        for (int i = 1; i < nums.length; i++) {
             if (nums[i] >= 0) {
                 max[i] = Math.max(max[i - 1] * nums[i], nums[i]);
                 min[i] = Math.min(min[i - 1] * nums[i], nums[i]);
@@ -61,7 +62,7 @@ public class OneFiveTwo {
                 max[i] = Math.max(min[i - 1] * nums[i], nums[i]);
                 min[i] = Math.min(max[i - 1] * nums[i], nums[i]);
             }
-            res = Math.max(max[i], res);
+            res = Math.max(res, max[i]);
         }
         return res;
     }

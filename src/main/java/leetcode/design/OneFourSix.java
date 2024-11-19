@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.design;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,6 +11,9 @@ import java.util.Map;
  */
 public class OneFourSix {
 
+    /**
+     * 直接借助LinkedHashMap
+     */
     static class LRUCache {
         // 利用LinkedHashMap
 
@@ -46,8 +49,8 @@ public class OneFourSix {
 
     public static void main(String[] args) {
         LRUCache lruCache = new LRUCache(2);
-        lruCache.put(1,1);
-        lruCache.put(2,2);
+        lruCache.put(1, 1);
+        lruCache.put(2, 2);
         System.out.println(lruCache.get(1));
     }
 }

@@ -56,6 +56,31 @@ public class ThreeFour {
         return right;
     }
 
+    public int[] searchRange2(int[] nums, int target) {
+        // 二分查找+双指针 时间复杂度O(logN) 空间复杂度O(1)
+        // 在数组元素完全相同的情况下时间复杂度会退化到O(N)
+        int left = 0, right = nums.length - 1;
+        int x = -2, y = 0;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) {
+                x = y = mid;
+                while (x >= 0 && nums[x] == target) {
+                    x--;
+                }
+                while (y < nums.length && nums[y] == target) {
+                    y++;
+                }
+                break;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return new int[]{x + 1, y - 1};
+    }
+
     public int[] searchRange1(int[] nums, int target) {
         // 双指针 时间复杂度O(N) 空间复杂度O(1)
         int left = 0, right = nums.length - 1;

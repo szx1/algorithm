@@ -48,7 +48,6 @@ public class TwoZeroSeven {
 
     public boolean canFinish1(int numCourses, int[][] prerequisites) {
         // 深度优先搜索 时间复杂度O(M+N) 空间复杂度O(M+N)
-        // 保存节点入度
         Map<Integer, List<Integer>> map = new HashMap<>();
         for (int[] prerequisite : prerequisites) {
             map.computeIfAbsent(prerequisite[1], k -> new ArrayList<>()).add(prerequisite[0]);

@@ -2,15 +2,16 @@ package leetcode.auxclass.graph;
 
 /**
  * 并查集的模板类
- * 可解决图论中的连通性问题
+ * 并查集单次操作(Union和Find)的时间复杂度O(α(n)) a为反阿克曼函数 在n较大时也不会超过5可以认为近似于常数级
+ * 可解决图论中无向图(部分双向边的有效图问题也可以)的连通性问题
  *
  * @author zengxi.song
  * @date 2024/8/8
  */
 public class UnionFind {
 
-    private final int[] parent;
-    private final int[] rank;
+    protected final int[] parent;
+    protected final int[] rank;
 
     public UnionFind(int n) {
         parent = new int[n];

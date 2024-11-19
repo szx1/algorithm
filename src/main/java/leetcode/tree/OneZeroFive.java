@@ -2,6 +2,8 @@ package leetcode.tree;
 
 import leetcode.auxclass.TreeNode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +17,34 @@ public class OneZeroFive {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         // 迭代
-        return null;
-
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
+        // 前序遍历的第一个节点即为root
+        TreeNode root = new TreeNode(preorder[0]);
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        int inorderIndex = 0;
+        for (int i = 1; i < preorder.length; i++) {
+            TreeNode node = stack.peek();
+            // 说明左子树还存在元素 即此时的preorder的下标i为左子树
+            if (node.val != inorder[inorderIndex]) {
+                TreeNode left = new TreeNode(preorder[i]);
+                node.left = left;
+                stack.push(left);
+            } else {
+                // 说明此时没有左子树 我们就要检查是否存在右子树
+                // 我们一直将inorderIndex++ 直到出现不等于的值 说明此时i为当前节点的右子树
+                while (!stack.isEmpty() && stack.peek().val == inorder[inorderIndex]) {
+                    node = stack.pop();
+                    inorderIndex++;
+                }
+                // 此时i就是node的右子树
+                node.right = new TreeNode(preorder[i]);
+                stack.push(node.right);
+            }
+        }
+        return root;
     }
 
     private int preIndex;

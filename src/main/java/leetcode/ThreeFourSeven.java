@@ -22,6 +22,7 @@ public class ThreeFourSeven {
     private static final Random RANDOM = new Random();
 
     public int[] topKFrequent(int[] nums, int k) {
+        // 快速选择 借助快速排序的性质 最优时间复杂度O(n)
         int[] res = new int[k];
         Map<Integer, Integer> countMap = this.getCountMap(nums);
         int[] aux = new int[countMap.size()];
@@ -57,7 +58,7 @@ public class ThreeFourSeven {
     }
 
     public int[] topKFrequent3(int[] nums, int k) {
-        // 维护k个元素的最小堆 自己维护堆 时间复杂度O(nlogk)
+        // 维护k个元素的最小堆 自己维护堆 时间复杂度O(nlogk) 空间复杂度O(N) hash表是O(N) 堆是O(k)
         Map<Integer, Integer> map = this.getCountMap(nums);
         int[] heap = new int[k];
         int size = 0;
@@ -74,7 +75,7 @@ public class ThreeFourSeven {
     }
 
     public int[] topKFrequent2(int[] nums, int k) {
-        // 维护k个元素的最小堆 采用PriorityQueue 时间复杂度O(nlogk)
+        // 维护k个元素的最小堆 采用PriorityQueue 时间复杂度O(nlogk) 空间复杂度O(N) hash表是O(N) 堆是O(k)
         Map<Integer, Integer> map = this.getCountMap(nums);
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(a -> map.getOrDefault(a, 0)));
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {

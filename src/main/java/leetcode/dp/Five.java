@@ -3,6 +3,7 @@ package leetcode.dp;
 /**
  * 最长回文子串
  * 和647题类似
+ * 马拉车算法(Manacher)可以在线性时间计算回文串
  *
  * @author zengxi.song
  * @date 2024/8/28
@@ -10,6 +11,54 @@ package leetcode.dp;
 public class Five {
 
     public String longestPalindrome(String s) {
+        // 马拉车算法 时间复杂度O(N) 空间复杂度O(N)
+        // 奇偶统一处理
+        String str = this.preprocess(s);
+        // len[i]记录下标为i的字符最长回文字符串的半径(不包括自身) 避免重复计算
+        int[] len = new int[str.length()];
+        int start = 0, end = 0;
+        // center表示当前最大右边界回文串的中心 right表示当前最大右边界
+        int center = 0, right = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (i < right) {
+                len[i] = Math.min(len[2 * center - i], right - i);
+            }
+            // 从i+len[i]和i-len[i]开始中心扩展
+            int x = i - len[i] - 1, y = i + len[i] + 1;
+            while (y < str.length() && x >= 0 && str.charAt(x) == str.charAt(y)) {
+                len[i]++;
+                x--;
+                y++;
+            }
+            if (i + len[i] > right) {
+                center = i;
+                right = i + len[i];
+            }
+            if (2 * len[i] + 1 > end - start) {
+                end = i + len[i];
+                start = i - len[i];
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = start; i <= end; i++) {
+            if (str.charAt(i) != '#') {
+                sb.append(str.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
+
+    private String preprocess(String s) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('#');
+        for (int i = 0; i < s.length(); i++) {
+            sb.append(s.charAt(i));
+            sb.append('#');
+        }
+        return sb.toString();
+    }
+
+    public String longestPalindrome2(String s) {
         // 双指针中心扩展法 时间复杂度O(n^2) 空间复杂度O(1)
         // 以所有字符为中心进行扩展
         int x = 0, y = 0, max = 1;
@@ -78,5 +127,9 @@ public class Five {
             }
         }
         return s.substring(x, y + 1);
+    }
+
+    public static void main(String[] args) {
+        new Five().longestPalindrome("abb");
     }
 }

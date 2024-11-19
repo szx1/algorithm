@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.sort;
 
 /**
  * 合并两个有序数组
@@ -9,7 +9,7 @@ package leetcode.array;
 public class EightEight {
 
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        // 从后往前逆向双指针 不适用额外数组 时间复杂度O(m+n) 空间复杂度O(1)
+        // 从后往前逆向双指针 不使用额外数组 时间复杂度O(m+n) 空间复杂度O(1)
         int i = m - 1, j = n - 1;
         int index = m + n - 1;
         while (i >= 0 && j >= 0) {

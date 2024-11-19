@@ -9,7 +9,7 @@ package leetcode.dp.knapsack.zeroone;
 public class FourNineFour {
 
     public int findTargetSumWays(int[] nums, int target) {
-        // 动态规划 空间优化版本
+        // 动态规划 空间优化版本 时间复杂度O(N) 空间复杂度O(N)
         int sum = 0;
         for (int num : nums) {
             sum += num;
@@ -34,8 +34,8 @@ public class FourNineFour {
         return dp[target];
     }
 
-    public int findTargetSumWays2(int[] nums, int target) {
-        // 动态规划
+    public int findTargetSumWays3(int[] nums, int target) {
+        // 动态规划 时间复杂度O(N) 空间复杂度O(N^2)
         // 设left-right=target left+right=sum 得left=(sum+target)/2 类似于416题
         int sum = 0;
         for (int num : nums) {
@@ -75,6 +75,24 @@ public class FourNineFour {
             }
         }
         return dp[nums.length - 1][target];
+    }
+
+    public int findTargetSumWays2(int[] nums, int target) {
+        // 另一种回溯 时间复杂度O(2^n) 空间复杂度O(n)
+        backTracking(nums, target, 0);
+        return res;
+    }
+
+    private void backTracking(int[] nums, int target, int index) {
+        if (index == nums.length) {
+            if (target == 0) {
+                res++;
+            }
+            return;
+        }
+
+        backTracking(nums, target - nums[index], index + 1);
+        backTracking(nums, target + nums[index], index + 1);
     }
 
     private int res = 0;

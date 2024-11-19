@@ -10,6 +10,7 @@ public enum SortEnum {
     HEAP,
     BUBBLE,
     RECURSION_MERGE,
+    ITERATION_MERGE,
     INSERTION,
     SELECTION,
 }

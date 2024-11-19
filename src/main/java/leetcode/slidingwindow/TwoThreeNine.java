@@ -17,9 +17,13 @@ public class TwoThreeNine {
     public int[] maxSlidingWindow(int[] nums, int k) {
         // 分组计算最大值 总体时间复杂度O(N)每个下标最多只会放入一次 空间复杂度O(k)
         int n = nums.length;
-        // prefix代表当前元素在分组的前缀最大值 比如 k=3的情况下 prefixMax[0]=nums[0] prefixMax[3]=nums[3] 从左到右
+        // 将数组从左到右k个一组进行分组
+        // prefix代表当前元素在分组的前缀最大值(即分组的左边界到当前元素的最大值) 从左到右
+        // 比如 k=2的情况下
+        // 下标0->1为一个分组,prefixMax[0]=nums[0],preMax[1]=Math.max(preMax[0],nums[1]),prefixMax[2]=nums[2]
+        // 即i如果是k的倍数 则重新赋值prefixMax为当前值
         int[] prefixMax = new int[n];
-        // suffixMax代表当前元素在分组的后缀最大值 比如 k=3的情况下 suffixMax[nums.length-1]=nums[nums.length-1] 从右到左
+        // suffixMax代表当前元素在分组的后缀最大值 同prefixMax 但是顺序是从右到左
         int[] suffixMax = new int[n];
         for (int i = 0; i < n; ++i) {
             if (i % k == 0) {
@@ -29,6 +33,7 @@ public class TwoThreeNine {
             }
         }
         for (int i = n - 1; i >= 0; --i) {
+            // suffix有一个例外 n-1肯定为nums[i]
             if (i == n - 1 || (i + 1) % k == 0) {
                 suffixMax[i] = nums[i];
             } else {
@@ -36,11 +41,16 @@ public class TwoThreeNine {
             }
         }
         int[] ans = new int[n - k + 1];
-        // 从第一个分组开始遍历
-        // 分组的最大值为已该位置为后缀的最大值和以分组的开头为前缀的最大值的较大值
-        for (int i = k - 1; i < n; i++) {
-            ans[i - k + 1] = Math.max(suffixMax[i - k + 1], prefixMax[i]);
+        // 从第一个分组开始遍历 i表示分组的左边界
+        // 假设此分组跨越两个第一步分组(以下统称one分组) 分组内下标j为两个one分组的分界线
+        // 则该分组内的最大值为i到j以及j到i+k-1的最大值  其中i到j即为suffixMax[i] j到i+k-1即为prefixMax[i+k-1]
+        for (int i = 0; i <= n - k; i++) {
+            ans[i] = Math.max(suffixMax[i], prefixMax[i + k - 1]);
         }
+        // 这个是以下标k-1开始计算 即i表示的是分组的右边界
+//        for (int i = k - 1; i < n; i++) {
+//            ans[i - k + 1] = Math.max(suffixMax[i - k + 1], prefixMax[i]);
+//        }
         return ans;
     }
 

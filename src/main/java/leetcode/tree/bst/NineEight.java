@@ -37,16 +37,19 @@ public class NineEight {
 
     public boolean isValidBST1(TreeNode root) {
         // dfs 时间复杂度O(N) 空间复杂度O(N)
-        return isValidBST(root.left, Integer.MIN_VALUE, root.val) && isValidBST(root.right, root.val, Integer.MAX_VALUE);
-    }
-
-    public boolean isValidBST(TreeNode root, int min, int max) {
         if (root == null) {
             return true;
         }
-        if (root.val <= min || root.val >= max) {
+        return isValid(root.left, root.val, Long.MIN_VALUE) && isValid(root.right, Long.MAX_VALUE, root.val);
+    }
+
+    private boolean isValid(TreeNode node, long max, long min) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val >= max || node.val <= min) {
             return false;
         }
-        return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
+        return isValid(node.left, node.val, min) && isValid(node.right, max, node.val);
     }
 }

@@ -15,6 +15,7 @@ public class ThreeNine {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
+        // 这里的排序是为了剪枝 不排序也不影响结果
         Arrays.sort(candidates);
         backTracking(res, new LinkedList<>(), candidates, target, 0, 0);
         return res;
