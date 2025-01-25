@@ -37,6 +37,7 @@ public class EightFour {
                     if (stack.isEmpty()) {
                         break;
                     }
+                    // 此时的i和peek就是pop两边第一个较小的值
                     res = Math.max((i - stack.peek() - 1) * newVal[pop], res);
                 }
                 stack.push(i);
@@ -63,10 +64,11 @@ public class EightFour {
                 while (heights[i] < heights[stack.peek()]) {
                     int pop = stack.pop();
                     if (stack.isEmpty()) {
-                        // 这里处理的开头没有更小的值的数据
+                        // 这里处理开头没有更小的值的数据
                         res = Math.max((i) * heights[pop], res);
                         break;
                     }
+                    // 此时的i和peek就是pop两边第一个较小的值
                     res = Math.max((i - stack.peek() - 1) * heights[pop], res);
                 }
                 stack.push(i);
@@ -88,6 +90,6 @@ public class EightFour {
     }
 
     public static void main(String[] args) {
-        new EightFour().largestRectangleArea(new int[]{2, 4});
+        new EightFour().largestRectangleArea1(new int[]{3, 2,2, 3});
     }
 }

@@ -21,6 +21,9 @@ public class Five {
         int center = 0, right = 0;
         for (int i = 0; i < str.length(); i++) {
             if (i < right) {
+                // center为中心，找到i关于center对应的点mirror的过程
+                // center-mirror=i-center ->mirror=2*center-i
+                // 所以len[i]就应该(取决于右边界)等于len[mirror] 但是要注意右边界right 超出就不能保证了
                 len[i] = Math.min(len[2 * center - i], right - i);
             }
             // 从i+len[i]和i-len[i]开始中心扩展
@@ -106,21 +109,18 @@ public class Five {
         for (int i = 0; i < s.length(); i++) {
             dp[i][i] = true;
         }
-        int max = 1;
         int x = 0, y = 0;
         // 因为dp[i][j]和i+1、j-1有关
         // 所以应该从左下角开始遍历 但是j要大于i所以j从i+1开始
         for (int i = s.length() - 1; i >= 0; i--) {
             for (int j = i + 1; j < s.length(); j++) {
-                boolean equal = s.charAt(i) == s.charAt(j);
                 if (j == i + 1) {
-                    dp[i][j] = equal;
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
                 } else {
-                    dp[i][j] = equal && dp[i + 1][j - 1];
+                    dp[i][j] = dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j);
                 }
 
-                if (dp[i][j] && (j - i + 1) > max) {
-                    max = j - i + 1;
+                if (dp[i][j] && j - i > y - x) {
                     x = i;
                     y = j;
                 }

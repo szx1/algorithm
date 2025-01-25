@@ -10,7 +10,7 @@ package leetcode.dp;
 public class SixFourSeven {
 
     public int countSubstrings(String s) {
-        // 马拉车算法 时间复杂度O(N) 空间复杂度O(1)
+        // 马拉车算法 时间复杂度O(N) 空间复杂度O(N)
         int res = 0;
         // len[i]记录以i为中心的最大半径
         s = this.preprocess(s);
@@ -31,7 +31,7 @@ public class SixFourSeven {
                 y++;
             }
             // 半径为多少代表有多少个回文串
-            // 这里/2即可是因为 回文串永远以#w结尾 #会与字母数相等或者大一个 /2保证就是字母的数量
+            // 这里/2即可是因为 回文串永远以#结尾 #会与字母数相等或者大一个 /2保证就是字母的数量
             res += len[i] / 2;
             if (i + len[i] > right) {
                 right = i + len[i];

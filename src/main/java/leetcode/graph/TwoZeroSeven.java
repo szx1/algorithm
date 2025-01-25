@@ -13,6 +13,9 @@ import java.util.Set;
 /**
  * 课程表
  *
+ * <br>
+ * Tips:这个题如果单纯的使用dfs回溯可能会超时 所有需要将没有环的节点记录下来
+ *
  * @author zengxi.song
  * @date 2024/7/25
  */

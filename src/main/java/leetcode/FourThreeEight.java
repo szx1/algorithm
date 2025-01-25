@@ -58,6 +58,7 @@ public class FourThreeEight {
     }
 
     public List<Integer> findAnagrams3(String s, String p) {
+        // 滑动窗口优化版
         List<Integer> res = new ArrayList<>();
         if (s.length() < p.length()) {
             return res;
@@ -109,7 +110,9 @@ public class FourThreeEight {
     }
 
     public List<Integer> findAnagrams2(String s, String p) {
-        // 维护窗口内的字母个数
+        // 版本一会超时 所以要想办法动态维护窗口内的字母个数 滑动窗口维护 这里使用数组
+        // 时间复杂度O(M+(N-M)*C) 空间复杂度O(C)
+        // (N-M)*C是比较两个数组是否相同的复杂度
         List<Integer> res = new ArrayList<>();
         if (s.length() < p.length()) {
             return res;
@@ -138,26 +141,26 @@ public class FourThreeEight {
     public List<Integer> findAnagrams1(String s, String p) {
         // 这个会超时
         List<Integer> res = new ArrayList<>();
+        Map<Character, Integer> pMap = new HashMap<>(p.length());
+        for (int i = 0; i < p.length(); i++) {
+            pMap.merge(p.charAt(i), 0, (oldV, newV) -> oldV + 1);
+        }
         for (int i = 0; i < s.length() - p.length() + 1; i++) {
             String substring = s.substring(i, i + p.length());
-            if (checkAnagram(substring, p)) {
+            if (checkAnagram(substring, pMap)) {
                 res.add(i);
             }
         }
         return res;
     }
 
-    private boolean checkAnagram(String s1, String s2) {
+    private boolean checkAnagram(String s1, Map<Character, Integer> pMap) {
         Map<Character, Integer> map1 = new HashMap<>(s1.length());
-        Map<Character, Integer> map2 = new HashMap<>(s2.length());
         for (int i = 0; i < s1.length(); i++) {
             map1.merge(s1.charAt(i), 0, (oldV, newV) -> oldV + 1);
         }
-        for (int i = 0; i < s2.length(); i++) {
-            map2.merge(s2.charAt(i), 0, (oldV, newV) -> oldV + 1);
-        }
         for (Map.Entry<Character, Integer> entry : map1.entrySet()) {
-            if (!Objects.equals(entry.getValue(), map2.get(entry.getKey()))) {
+            if (!Objects.equals(entry.getValue(), pMap.get(entry.getKey()))) {
                 return false;
             }
         }

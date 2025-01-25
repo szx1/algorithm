@@ -49,6 +49,7 @@ public class FourTwo {
         int leftMax = height[0], rightMax = height[height.length - 1];
         int left = 1, right = height.length - 2;
         int res = 0;
+        // 我们通过对比leftMax和rightMax找到其中的短板 然后每次计算短板那边的面积就可以了
         while (left <= right) {
             leftMax = Math.max(leftMax, height[left - 1]);
             rightMax = Math.max(rightMax, height[right + 1]);

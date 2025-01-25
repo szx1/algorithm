@@ -27,7 +27,7 @@ public class TwoTwo {
             backTracking(res, sb, n, leftCount + 1, rightCount);
             sb.setLength(sb.length() - 1);
         }
-        // 只有右括号使用此时小于左括号时 添加右括号才会有效
+        // 只有右括号使用次数小于左括号时 添加右括号才会有效
         if (rightCount < leftCount) {
             sb.append(')');
             backTracking(res, sb, n, leftCount, rightCount + 1);

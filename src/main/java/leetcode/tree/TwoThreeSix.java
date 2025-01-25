@@ -96,6 +96,7 @@ public class TwoThreeSix {
 
     public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        dfs(root, parentMap);
         Set<TreeNode> parents = new HashSet<>();
         while (p != null) {
             parents.add(p);

@@ -15,6 +15,7 @@ public class OneTwoEight {
 
     public int longestConsecutive(int[] nums) {
         // 使用set记录 时间复杂度O(N) 空间复杂度O(N)
+        // 去掉了额外的map记录
         Set<Integer> set = new HashSet<>(nums.length);
         for (int num : nums) {
             set.add(num);
