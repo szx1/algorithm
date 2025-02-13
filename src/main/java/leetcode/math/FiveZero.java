@@ -2,6 +2,7 @@ package leetcode.math;
 
 /**
  * Pow(x,n)
+ * 快速幂算法
  *
  * @author zengxi.song
  * @date 2024/7/17
