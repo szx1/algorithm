@@ -1,6 +1,6 @@
 package leetcode.hot100;
 
-import leetcode.FourThreeEight;
+import leetcode.slidingwindow.FourThreeEight;
 import leetcode.FourZeroSix;
 import leetcode.design.OneFourSix;
 import leetcode.OneSixNine;
@@ -193,7 +193,7 @@ public class Hot100 {
         OneZeroFive oneZeroFive = new OneZeroFive();
         // *114.二叉树展开为链表
         OneOneFour oneOneFour = new OneOneFour();
-        // *121.买卖股票的最佳时机
+        // 121.买卖股票的最佳时机
         OneTwoOne oneTwoOne = new OneTwoOne();
         // *124.二叉树中的最大路径和
         OneTwoFour oneTwoFour = new OneTwoFour();
@@ -223,7 +223,7 @@ public class Hot100 {
         OneNineEight oneNineEight = new OneNineEight();
         // 200.岛屿数量
         TwoZeroZero twoZeroZero = new TwoZeroZero();
-        // 206.翻转链表
+        // 206.反转链表
         TwoZeroSix twoZeroSix = new TwoZeroSix();
         // 207.课程表
         TwoZeroSeven twoZeroSeven = new TwoZeroSeven();
@@ -271,7 +271,7 @@ public class Hot100 {
         ThreeNineFour threeNineFour = new ThreeNineFour();
         // *399.除法求值
         ThreeNineNine threeNineNine = new ThreeNineNine();
-        // 406.根据身高重建队列
+        // *406.根据身高重建队列
         FourZeroSix fourZeroSix = new FourZeroSix();
         // 416.分割等和子集
         FourOneSix fourOneSix = new FourOneSix();

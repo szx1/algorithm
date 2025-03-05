@@ -9,6 +9,62 @@ package leetcode.bs;
 public class Four {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // 最牛的一个解法 时间复杂度O(log min(m,n)) 空间复杂度O(1)
+        // 确保nums1.length<=nums2.length
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int m = nums1.length, n = nums2.length;
+        // 我们要找到一个分界点 即nums1的i和nums2的j 使得i和j的左边的数量大于等于(m+n奇数则左侧多一个)右边的数量
+        // 易得m+n奇数 i+j=(m+n+1)/2 偶数则为i+j=(m+n)/2 基于计算机整数的除法 二者可以合并 即i+j=(m+n+1)/2
+        // 即我们只要找到教短的数组的分界点i即可确定j
+        // 排序数组 使用二分查找
+        // 注意这里right是m 因为我们找的是分界点不是数组中的数字 分界点总数sum=m+1
+        int left = 0, right = m;
+        while (left <= right) {
+            int i = left + ((right - left) >> 1);
+            // 我们要确定i和谁比
+            // 这里可以交叉对比
+            // 即如果nums1[i-1]>nums2[j] 则证明i大了 因为左侧始终要小于等于右侧
+            // 如果nums1[i]<nums2[j-1] 则证明i小了 因为左侧始终要小于等于右侧
+            // 还需要考虑边界点(好麻烦) 即i==m i==0...这种情况
+            int j = (m + n + 1) / 2 - i;
+            if (i != 0 && j != n && nums1[i - 1] > nums2[j]) {
+                right = i - 1;
+            } else if (i != m && j != 0 && nums1[i] < nums2[j - 1]) {
+                left = i + 1;
+            } else {
+                // 一定能进来
+                // 找到正确的分界点了
+                // 首先判断边界值
+                int leftMax = 0;
+                if (i == 0) {
+                    leftMax = nums2[j - 1];
+                } else if (j == 0) {
+                    leftMax = nums1[i - 1];
+                } else {
+                    leftMax = Math.max(nums1[i - 1], nums2[j - 1]);
+                }
+                boolean odd = ((m + n) & 1) == 1;
+                if (odd) {
+                    return leftMax;
+                }
+                // 偶数还要求rightMin 依然先从边界值开始
+                int rightMin = 0;
+                if (i == m) {
+                    rightMin = nums2[j];
+                } else if (j == n) {
+                    rightMin = nums1[i];
+                } else {
+                    rightMin = Math.min(nums1[i], nums2[j]);
+                }
+                return ((double) (leftMax + rightMin)) / 2;
+            }
+        }
+        return 0;
+    }
+
+    public double findMedianSortedArrays2(int[] nums1, int[] nums2) {
         // 题目要求时间复杂度是log级别 再加上排序数组 可以使用二分查找
         // 时间复杂度O(log(m+n)) 空间复杂度O(1)
         int length1 = nums1.length, length2 = nums2.length;
@@ -24,7 +80,7 @@ public class Four {
 
     public int getKthElement(int[] nums1, int[] nums2, int k) {
         /*
-         * 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1] 和 pivot2 = nums2[k/2-1] 进行比较
+         * 主要思路：要找到第 k (k>1) 小的元素，那么就取 pivot1 = nums1[k/2-1](下标k/2-1即为第k2/大的数) 和 pivot2 = nums2[k/2-1] 进行比较
          * 这里的 "/" 表示整除
          * nums1 中小于等于 pivot1 的元素有 nums1[0 .. k/2-2] 共计 k/2-1 个
          * nums2 中小于等于 pivot2 的元素有 nums2[0 .. k/2-2] 共计 k/2-1 个

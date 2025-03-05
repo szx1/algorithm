@@ -17,15 +17,21 @@ public class FiveFourThree {
         return res;
     }
 
+    /**
+     * 该方法返回以node为根节点的二叉树的深度
+     *
+     * @param node
+     * @return
+     */
     private int dfs(TreeNode node) {
         if (node == null) {
             return 0;
         }
         int left = dfs(node.left);
         int right = dfs(node.right);
+        // 深度加起来就是经过node的边数
         res = Math.max(res, left + right);
-        // 直径用边数来表示 这里的加一很巧妙 可以不用特殊处理左右为null的情况
-        // 否则在判断res的时候就要分情况判断left+right加0还是加一还是加二
+        // 深度为较大值加1
         return Math.max(left, right) + 1;
     }
 }

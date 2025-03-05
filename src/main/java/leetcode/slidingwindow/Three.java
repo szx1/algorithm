@@ -16,18 +16,19 @@ public class Three {
     public int lengthOfLongestSubstring(String s) {
         // 使用Map维护滑动窗口 value维护下标 这样left指针就不用++然后移除set了
         Map<Character, Integer> map = new HashMap<>();
-        int left = 0, right = 0;
+        // 这里注意要让left为-1 可以兼容不存在重复字符的情况
+        int left = -1, right = 0;
         int res = 0;
         while (right < s.length()) {
             char c = s.charAt(right);
             Integer index = map.get(c);
             if (index != null) {
-                // 如果此时该字符已经存在
+                // 如果此时该字符已经存在 left需要是二者的较大值
                 left = Math.max(left, index);
             }
             map.put(c, right);
             res = Math.max(res, right - left);
-
+            right++;
         }
         return res;
     }

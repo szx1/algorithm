@@ -2,8 +2,8 @@ package leetcode.dp;
 
 /**
  * 正则表达式匹配
- * 属于动态规划中较难题目，状态转移方程有点难想
- * 视频解析:https://www.bilibili.com/video/BV1Br4y1v7SA/?spm_id_from=333.788&vd_source=f0cc9fb393ea8368ee6e72359708d425
+ * 属于动态规划中较难题目，状态转移方程有点难想<br>
+ * <a href="https://www.bilibili.com/video/BV1Br4y1v7SA/?spm_id_from=333.788&vd_source=f0cc9fb393ea8368ee6e72359708d425">视频解析</a>
  *
  * @author zengxi.song
  * @date 2024/8/19
@@ -22,6 +22,9 @@ public class Ten {
             for (int j = 1; j <= n; j++) {
                 if (p.charAt(j - 1) == '*') {
                     dp[i][j] = dp[i][j - 2];
+                    if (dp[i][j]) {
+                        continue;
+                    }
                     if (i >= 1) {
                         dp[i][j] |= dp[i - 1][j] && equal(s, p, i, j - 1);
                     }

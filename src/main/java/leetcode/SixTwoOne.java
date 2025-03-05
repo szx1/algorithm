@@ -36,7 +36,7 @@ public class SixTwoOne {
         return Math.max((maxRun - 1) * (n + 1) + maxRunTaskNum, tasks.length);
     }
 
-    public int leastInterval3(char[] tasks, int n) {
+    public int leastInterval4(char[] tasks, int n) {
         // 官方做法 时间复杂度O(MN) 空间复杂度O(M)  M是任务的种类 N是任务的个数 leetCode用时57ms
         Map<Character, Integer> countMap = new HashMap<>();
         // 统计所有任务的个数
@@ -79,6 +79,58 @@ public class SixTwoOne {
             taskRunNums.set(maxIndex, taskRunNums.get(maxIndex) - 1);
         }
         return time;
+    }
+
+    public int leastInterval3(char[] tasks, int n) {
+        Map<Character, Integer> countMap = new HashMap<>();
+        for (char task : tasks) {
+            countMap.merge(task, 1, Integer::sum);
+        }
+        List<Aux> list = new ArrayList<>();
+        for (Map.Entry<Character, Integer> entry : countMap.entrySet()) {
+            list.add(new Aux(entry.getValue(), 1));
+        }
+        int time = 0;
+        while (true) {
+            if (list.isEmpty()) {
+                break;
+            }
+            // 相当于每次推进一个格子
+            time++;
+            // 避免time空转
+            int minRunTime = Integer.MAX_VALUE;
+            for (Aux pair : list) {
+                minRunTime = Math.min(minRunTime, pair.nextRunTime);
+            }
+            // minRunTime可以保证小于MaxInt
+            time = Math.max(time, minRunTime);
+            // 找到运行次数最大且下一次运行时间有效的任务
+            Aux candidate = null;
+            for (Aux pair : list) {
+                // 上面避免了空转 这里可以省略 为了表明思路 暂留
+                if (pair.nextRunTime > time) {
+                    continue;
+                }
+                if (candidate == null || pair.remainder >= candidate.remainder) {
+                    candidate = pair;
+                }
+            }
+            candidate.nextRunTime = time + n + 1;
+            if (--candidate.remainder == 0) {
+                list.remove(candidate);
+            }
+        }
+        return time;
+    }
+
+    class Aux {
+        int remainder;
+        int nextRunTime;
+
+        public Aux(int remainder, int nextRunTime) {
+            this.remainder = remainder;
+            this.nextRunTime = nextRunTime;
+        }
     }
 
     public int leastInterval2(char[] tasks, int n) {

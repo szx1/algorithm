@@ -34,6 +34,7 @@ public class NineFour {
                     mostRight.right = cur;
                     cur = cur.left;
                 } else {
+                    // 此时mostRight.right==cur 还原mostRight.right=null
                     res.add(cur.val);
                     mostRight.right = null;
                     cur = cur.right;

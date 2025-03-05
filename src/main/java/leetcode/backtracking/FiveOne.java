@@ -46,7 +46,7 @@ public class FiveOne {
                 return false;
             }
         }
-        // 检查行
+        // 检查斜线 斜线要包括两部分
         for (int m = i, n = j; m >= 0 && n >= 0; m--, n--) {
             if (arr[m][n] == 'Q') {
                 return false;

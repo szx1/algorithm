@@ -11,7 +11,66 @@ import java.util.Map;
  */
 public class TwoZeroEight {
 
+    /**
+     * 迭代版本 比递归版本少了递归栈，少点空间复杂度
+     */
     class Trie {
+
+        private Node dummy = new Node();
+
+        public Trie() {
+
+        }
+
+        class Node {
+            boolean end;
+            Map<Character, Node> children = new HashMap<>();
+        }
+
+        public void insert(String word) {
+            Node node = dummy, pre = dummy;
+            int i = 0;
+            while (i < word.length() && (node = node.children.get(word.charAt(i))) != null) {
+                pre = node;
+                i++;
+            }
+            if (i == word.length() && node != null) {
+                node.end = true;
+            }
+            while (i < word.length()) {
+                Node newNode = new Node();
+                if (i == word.length() - 1) {
+                    newNode.end = true;
+                }
+                pre.children.put(word.charAt(i), newNode);
+                pre = newNode;
+                i++;
+            }
+        }
+
+        public boolean search(String word) {
+            Node node = searchNode(word);
+            return node != null && node.end;
+        }
+
+        public boolean startsWith(String prefix) {
+            return searchNode(prefix) != null;
+        }
+
+        public Node searchNode(String word) {
+            Node node = dummy;
+            int i = 0;
+            while (i < word.length() && (node = node.children.get(word.charAt(i))) != null) {
+                i++;
+            }
+            return node;
+        }
+    }
+
+    /**
+     * 递归版本
+     */
+    class Trie1 {
 
         class Node {
             boolean end;
@@ -26,7 +85,7 @@ public class TwoZeroEight {
 
         private Map<Character, Node> tree;
 
-        public Trie() {
+        public Trie1() {
             tree = new HashMap<>();
         }
 

@@ -1,5 +1,6 @@
 package leetcode.string;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -92,6 +93,10 @@ public class FourNine {
             auxMap.computeIfAbsent(new String(chars), k -> new ArrayList<>()).add(str);
         }
         return new ArrayList<>(auxMap.values());
+    }
+
+    public static void main(String[] args) {
+        new ArrayDeque<>().addFirst(1);
     }
 
 }

@@ -14,6 +14,48 @@ public class SevenSix {
     public String minWindow(String s, String t) {
         // 滑动窗口加双指针优化 时间复杂度O(m+n) 空间复杂度O(E) E为t中不重复字符的个数
         // 使用常量判断二者差距 减少了循环判断是否包含的时间复杂度
+        // 只使用一个map就行
+        Map<Character, Integer> countMap = new HashMap<>();
+        char[] charS = s.toCharArray();
+        char[] charT = t.toCharArray();
+        for (char c : charT) {
+            countMap.merge(c, 1, Integer::sum);
+        }
+        int diff = countMap.size();
+        int start = 0, end = charS.length + 1;
+        int left = 0, right = 0;
+        while (right < charS.length) {
+            if (!countMap.containsKey(charS[right])) {
+                right++;
+                continue;
+            }
+            if (countMap.merge(charS[right], -1, Integer::sum) == 0) {
+                diff--;
+            }
+            right++;
+            while (diff == 0) {
+                if (right - left < end - start) {
+                    start = left;
+                    end = right;
+                }
+                Integer count = countMap.get(charS[left]);
+                if (count == null) {
+                    left++;
+                    continue;
+                }
+                if (count == 0) {
+                    diff++;
+                }
+                countMap.put(charS[left], count + 1);
+                left++;
+            }
+        }
+        return end - start > s.length() ? "" : s.substring(start, end);
+    }
+
+    public String minWindow2(String s, String t) {
+        // 滑动窗口加双指针优化 时间复杂度O(m+n) 空间复杂度O(E) E为t中不重复字符的个数
+        // 使用常量判断二者差距 减少了循环判断是否包含的时间复杂度
         Map<Character, Integer> sCountMap = new HashMap<>();
         Map<Character, Integer> tCountMap = new HashMap<>();
         int diff = 0;
